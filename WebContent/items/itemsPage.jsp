@@ -711,9 +711,11 @@ $(document).ready(function(){
 	$(document).on("click", ".edit", function(){	       
 		var saveCat = $(this).parents("tr").find("#category").text();	
 		var saveType = $(this).parents("tr").find("#type").text();
+		var saveAmt = $(this).parents("tr").find("#amount").text().substr(1);
+		//alert($(this).parents("tr").find("#amount").text() + " " + $(this).parents("tr").find("#amount").html());
 		
 		$(this).parents("tr").find("#date").html('<input type="date" class="form-control" name="date" id="date" value = "' + $(this).parents("tr").find("#date").text() + '">');
-        $(this).parents("tr").find("#amount").html('<input type="number" class="form-control" name="amount" id="amount" value = "' + $(this).parents("tr").find("#amount").text() + '">');
+        $(this).parents("tr").find("#amount").html('<input type="number" class="form-control" name="amount" id="amount">');
         $(this).parents("tr").find("#description").html('<input type="text" class="form-control" name="description" id="description" value = "' + $(this).parents("tr").find("#description").text() + '">');
         $(this).parents("tr").find("#category").html('<select class="form-control" name="category" id="category"> <option value="Everyday/Living">Everyday/Living</option><option value="Transportation">Transportation</option><option value="Dining Out">Dining Out</option><option value="Groceries">Groceries</option><option value="Personal/Medical">Personal/Medical</option><option value="Gifts">Gifts</option><option value="Utilities">Utilities</option><option value="Others">Others</option> <option value="Income">Income</option>');
         $(this).parents("tr").find("#type").html('<select class="form-control" name="type" id="type"> <option value="Income">Income</option> <option value="Expense">Expense</option>');
@@ -721,6 +723,7 @@ $(document).ready(function(){
      // use saved values so that the dropdowns have the previous values instead of default (first option)
 		$(this).parents("tr").find("#category").val(saveCat);
 		$(this).parents("tr").find("#type").val(saveType);
+		$(this).parents("tr").find("#amount").val(saveAmt);
 		
 		// toggle to show add button and hide edit button
 		$(this).parents("tr").find(".add, .edit").toggle();		
