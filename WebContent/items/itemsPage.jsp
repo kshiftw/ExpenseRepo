@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>MyBudget</title>
+<title>MyExpenses</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -649,7 +649,7 @@ $(document).ready(function(){
 			
 			$.ajax({
 	      		type: "POST",
-	      		url: "/MyBudget/EditItem",
+	      		url: "/MyExpenses/EditItem",
 	      		data: {
 	      			"ID": checkID,
 	      			"Date": editDate,
@@ -683,7 +683,7 @@ $(document).ready(function(){
 			
 			$.ajax({
 	      		type: "POST",
-	      		url: "/MyBudget/CreateItem",
+	      		url: "/MyExpenses/CreateItem",
 	      		data: {
 	      			"Date": date,
 	      			"Amount": amount,
@@ -739,7 +739,7 @@ $(document).ready(function(){
             
           	$.ajax({
           		type: "POST",
-          		url: "/MyBudget/DeleteItem",
+          		url: "/MyExpenses/DeleteItem",
           		data: {
           			"ID": id
           		},
