@@ -586,7 +586,7 @@ $(document).ready(function(){
 	            '<option value="Utilities">Utilities</option> ' +
 	            '<option value="Others">Others</option>' +
 	            '<option value="Income">Income</option></td>' +
-            '<td><select class="form-control" name="type" id="type"><option value="Income">Income</option> <option value="Expense">Expense</option> </td>' +
+            '<td><select class="form-control" name="type" id="type"><option value="Expense">Expense</option><option value="Income">Income</option>  </td>' +
 			'<td>' + actions + '</td>' +
         '</tr>';
     	
@@ -718,7 +718,7 @@ $(document).ready(function(){
         $(this).parents("tr").find("#amount").html('<input type="number" class="form-control" name="amount" id="amount">');
         $(this).parents("tr").find("#description").html('<input type="text" class="form-control" name="description" id="description" value = "' + $(this).parents("tr").find("#description").text() + '">');
         $(this).parents("tr").find("#category").html('<select class="form-control" name="category" id="category"> <option value="Everyday/Living">Everyday/Living</option><option value="Transportation">Transportation</option><option value="Dining Out">Dining Out</option><option value="Groceries">Groceries</option><option value="Personal/Medical">Personal/Medical</option><option value="Gifts">Gifts</option><option value="Utilities">Utilities</option><option value="Others">Others</option> <option value="Income">Income</option>');
-        $(this).parents("tr").find("#type").html('<select class="form-control" name="type" id="type"> <option value="Income">Income</option> <option value="Expense">Expense</option>');
+        $(this).parents("tr").find("#type").html('<select class="form-control" name="type" id="type"> <option value="Expense">Expense</option><option value="Income">Income</option>');
 		   
      // use saved values so that the dropdowns have the previous values instead of default (first option)
 		$(this).parents("tr").find("#category").val(saveCat);

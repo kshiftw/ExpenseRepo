@@ -20,7 +20,7 @@
 	}
 	
 	#heading {
-		background-color: #4ecfbd;		
+		background-color: #76ccc0;		
 	}
 	
 	#MyBudget {
@@ -46,7 +46,7 @@ $(document).ready(function(){
 	
 	<div class="jumbotron text-center" id="heading">
 		<h1 id="MyBudget">MyExpenses</h1>
-		<h5>Stay on top of your money by tracking your monthly budget and expenses.</h5>
+		<h5>Stay on top of your money by tracking your monthly and annual expenses.</h5>
 	</div>	
 	
 	<div class ="container">
@@ -55,8 +55,7 @@ $(document).ready(function(){
 			<div class="row">
 				<div class="col-4 offset-md-4">
 					<p>${NOTIFICATION}</p>
-				</div>
-			
+				</div>			
 			</div>
 			
 			<div class="row">
@@ -88,8 +87,7 @@ $(document).ready(function(){
 					<button type="submit" class="btn btn-primary">Login</button>
 				</div>				
 			</div>
-			
-		</form>
+		</form>	
 	</div>
 	<%-- <jsp:include page="../common/footer.jsp"></jsp:include> --%> 
 </body>

@@ -60,7 +60,7 @@ public class LoginController extends HttpServlet {
 				response.sendRedirect("/MyExpenses/Main");
 			} else {
 				// Display login unsuccessful notification
-				request.getSession().setAttribute("NOTIFICATION", "Login Unsuccessful. Please try again.");
+				request.getSession().setAttribute("NOTIFICATION", "Login Unsuccessful. Please try again. To try out the application, use the username: \"root\" & password: \"root\"");
 				//response.sendRedirect("login/login.jsp");
 				RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/login/login.jsp");
 				dispatcher.forward(request, response);	
