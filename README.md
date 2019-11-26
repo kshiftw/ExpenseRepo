@@ -24,6 +24,11 @@ Prior to this project, I covered the basics of Java by following the online CS10
 * Chart.js https://www.chartjs.org/
 * Chart.js datalabels plugin https://chartjs-plugin-datalabels.netlify.com/
 
+## References:
+The following repositories contained projects that used similar technologies to the ones I was planning on using (ie. JSP, Java Servlets, JDBC, SQL DB, Heroku) so I used them as references for how I should develop my application:
+* https://github.com/RameshMF/todo-application-jsp-servlet-jdbc-mysql
+* https://github.com/laniywh/simple-web-app
+
 ## Step-by-step summary
 ### 1. Define Goals
 Defined goal of the application: "To create an application that allows users to track expenses and easily visualize what categories their expenses fall into." My method of approach was to learn as I came across things I needed.
@@ -33,11 +38,11 @@ Read through the various tutorials provided by Tutorialspoint that I needed befo
 * Java Database Connectivity (JDBC): https://www.tutorialspoint.com/jdbc/index.htm  
 * Java Server Pages (JSP): https://www.tutorialspoint.com/jsp/index.htm  
 ### 3. Implement Login Page
-* [Login.java] (https://github.com/kshiftw/ExpenseRepo/blob/master/src/model/Login.java)
-* LoginController.java
-* LoginDao.java
-* LoginDaoImpl.java
-* login.jsp
+* [Login.java](https://github.com/kshiftw/ExpenseRepo/blob/master/src/model/Login.java)
+* [LoginController.java](https://github.com/kshiftw/ExpenseRepo/blob/master/src/web/LoginController.java)
+* [LoginDao.java](https://github.com/kshiftw/ExpenseRepo/blob/master/src/dao/LoginDao.java)
+* [LoginDaoImpl.java](https://github.com/kshiftw/ExpenseRepo/blob/master/src/dao/LoginDaoImpl.java)
+* [login.jsp](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/login/login.jsp)
 	
 
 
