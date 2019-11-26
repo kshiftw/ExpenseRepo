@@ -33,8 +33,11 @@ Read through the various tutorials provided by Tutorialspoint that I needed befo
 * Java Database Connectivity (JDBC): https://www.tutorialspoint.com/jdbc/index.htm  
 * Java Server Pages (JSP): https://www.tutorialspoint.com/jsp/index.htm  
 ### 3. Implement Login Page
-* Login Model
-* Login Controller
+* [Login.java] (https://github.com/kshiftw/ExpenseRepo/blob/master/src/model/Login.java)
+* LoginController.java
+* LoginDao.java
+* LoginDaoImpl.java
+* login.jsp
 	
 
 
