@@ -60,7 +60,9 @@ Read through the various tutorials provided by Tutorialspoint that I needed befo
 * [ItemsController.java](https://github.com/kshiftw/ExpenseRepo/blob/master/src/web/ItemsController.java)
 	* Servlet used to query the list of expense items associated to the user 
 * [itemsPage.jsp](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/items/itemsPage.jsp)
-	* 
+	* Main page that displays expense items in the table and the donut chart based on the selected date
+	* Interacts with CreateItem, EditItem, and DeleteItem servlet if the associated buttons are clicked in the table
+### 5. Implement servlets for Item manipulation
 	
 
 
