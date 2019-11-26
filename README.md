@@ -39,10 +39,15 @@ Read through the various tutorials provided by Tutorialspoint that I needed befo
 * Java Server Pages (JSP): https://www.tutorialspoint.com/jsp/index.htm  
 ### 3. Implement Login Page
 * [Login.java](https://github.com/kshiftw/ExpenseRepo/blob/master/src/model/Login.java)
+	* Define the Login class which contains a username and password
 * [LoginController.java](https://github.com/kshiftw/ExpenseRepo/blob/master/src/web/LoginController.java)
+	* Servlet used to authenticate the user's credentials and control where the browser is redirected
 * [LoginDao.java](https://github.com/kshiftw/ExpenseRepo/blob/master/src/dao/LoginDao.java)
+	* Interface for accessing the Login object
 * [LoginDaoImpl.java](https://github.com/kshiftw/ExpenseRepo/blob/master/src/dao/LoginDaoImpl.java)
+	* Implementation of the Dao interface. Contains a validate() method that connects to the PostgreSQL database via JDBC to query and validate whether the given username/password combination exists in the database. 
 * [login.jsp](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/login/login.jsp)
+	* Login form page that sends POST request to LoginController upon clicking login button
 	
 
 
