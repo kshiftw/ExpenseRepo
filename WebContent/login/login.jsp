@@ -20,7 +20,7 @@
 	}
 	
 	#heading {
-		background-color: #76ccc0;		
+		background-color: #76ccc0;	
 	}
 	
 	#MyBudget {
