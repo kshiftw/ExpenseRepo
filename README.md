@@ -87,23 +87,23 @@ Heroku's free tier allows me to easily deploy my application and also have a fre
 
 ## Screen Captures
 ___
-#### Login
+### Login
 ![Login](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/common/login.gif)
 
 ___
-#### Change Month
+### Change Month
 ![Change Month](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/common/change_month.gif)
 
 ___
-#### Show Year
+### Show Year
 ![Show Year](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/common/show_year.gif)
 
 ___
-#### Add New
+### Add New
 ![Add New](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/common/add_new.gif)
 
 ___
-#### Delete
+### Delete
 ![Delete](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/common/delete.gif)
 
 
