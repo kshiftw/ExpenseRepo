@@ -3,9 +3,7 @@ Track your monthly/annual expenses and easily visualize your expenses in their r
   
 Try now at https://myexpenses2019.herokuapp.com/  with username: ```root``` and password: ```root```  
 
-Project started on Nov 4, 2019. Completed on Nov 25, 2019.     
-  
-This application is my first Java application and was used as a project to help me learn the language and the various technologies that are commonly used to create web applications. Prior to this project, I covered the basics of Java by following the online CS106A course provided by Stanford: https://see.stanford.edu/Course/CS106A
+Project started on Nov 4, 2019 and completed on Nov 26, 2019. This application is my first Java application and was used as a project to help me learn the language and the various technologies that are commonly used to create web applications. Prior to this project, I covered the basics of Java by following the online CS106A course provided by Stanford: https://see.stanford.edu/Course/CS106A
 
 ## Languages:
 * Java
