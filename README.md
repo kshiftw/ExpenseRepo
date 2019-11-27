@@ -86,18 +86,23 @@ I wanted to create an option for users to not be limited to expense items specif
 Heroku's free tier allows me to easily deploy my application and also have a free hosted PostgreSQL database. I followed the [Heroku Java Guide](https://devcenter.heroku.com/articles/getting-started-with-java) to get familiar with the platform and go through an example of how to deploy a java app. This [YouTube tutorial](https://youtu.be/IdmJpVzSvsA) helped me understand the steps I needed to take. I followed this [Heroku article](https://devcenter.heroku.com/articles/java-webapp-runner) to utilize the Webapp Runner, which allows me to launch my application in a Tomcat container. A Procfile was added to the root folder of my project that specifies the java command to run on startup ```web: java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/*.war```. Using GitHub Desktop to commit and push changes to my GitHub account, I was then able to use Heroku's GitHub integration to easily select my repository and deploy the application. 
 
 ## Screen Captures
+***
 #### Login
 ![Login](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/common/login.gif)
 
+***
 #### Change Month
 ![Change Month](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/common/change_month.gif)
 
+***
 #### Show Year
 ![Show Year](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/common/show_year.gif)
 
+***
 #### Add New
 ![Add New](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/common/add_new.gif)
 
+***
 #### Delete
 ![Delete](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/common/delete.gif)
 
