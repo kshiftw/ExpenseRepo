@@ -1,5 +1,6 @@
 # MyExpenses
-https://myexpenses2019.herokuapp.com/
+https://myexpenses2019.herokuapp.com/ 
+Use username: root & password: root to try out the application.
 
 Started: Nov 4  
 Completed: Nov 25   
