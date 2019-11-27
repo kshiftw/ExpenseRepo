@@ -186,19 +186,14 @@ $(document).ready(function(){
 	// Add DataTable plugin to include pagination, search, sorting, etc. on the table
 	$('#myTable').DataTable({
 		// set default ordering on second column: date (column numbering starts from 0)
-		"order": [[ 1, 'desc']],
-		
-		// setup the table controls https://datatables.net/reference/option/dom
-		'sDom': 'lrtip',
-		
+		"order": [[ 1, 'desc']],		
+		'sDom': 'lrtip', // setup the table controls https://datatables.net/reference/option/dom		
 		columnDefs: [
-			{
-				// display column, amount, with thousands separator ',' + decimal separator '.' + decimal places: 2 + prefix '$'
-				targets: [2],
+			{ // display column, amount, with thousands separator ',' + decimal separator '.' + decimal places: 2 + prefix '$'			
+				targets: [2], 
 			    render: $.fn.dataTable.render.number(',', '.', 2, '$')
 		    },
-			{
-				// center the text for the table columns
+			{ // center the text for the table columns				
 		    	targets: [1,2,3,4,5,6],
 				className: 'dt-center'
 			} 		
@@ -559,7 +554,7 @@ $(document).ready(function(){
 	
 	// redraw the chart every time a new date is selected
 	$('#datepicker').datepicker().on('changeDate', function() {
-		drawChart();		
+		drawTableChart();		
 	}); 
 	
 	// when the "Show All" button is clicked, call on the drawChartShowAll() function to display appropriate table and chart
