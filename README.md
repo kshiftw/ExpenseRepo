@@ -1,12 +1,9 @@
 # MyExpenses
-https://myexpenses2019.herokuapp.com/ 
-Use username: root & password: root to try out the application.
+Track your monthly/annual expenses and easily visualize your expenses in their respective categories.    
+Try now at https://myexpenses2019.herokuapp.com/  with username: ```root``` and password: ```root```  
 
-Started: Nov 4  
-Completed: Nov 25   
+Project started on Nov 4, 2019. Completed on Nov 25, 2019.     
 This application is my first Java application and was used as a project to help me learn the language and the various technologies that are commonly used to create web applications. Prior to this project, I covered the basics of Java by following the online CS106A course provided by Stanford: https://see.stanford.edu/Course/CS106A
-
-## Overview 
 
 ## Languages:
 * Java
@@ -37,8 +34,8 @@ The following repositories contained projects that used similar technologies to 
 * https://github.com/laniywh/simple-web-app
 
 ## Step-by-step summary
-### 1. Define Goals
-Defined goal of the application: "To create an application that allows users to track expenses and easily visualize what categories their expenses fall into." My method of approach was to learn as I came across things I needed.
+### 1. Define Goal
+Defined the goal of the application: "To create an application that allows users to track expenses and easily visualize what categories their expenses fall into." My method of approach was to learn as I came across things I needed. As I only knew basic Java, I knew I would have to pick up new tools and technologies along the way in order to develop the web application I was envisioning. 
 ### 2. Tutorials
 Read through the various tutorials provided by Tutorialspoint that I needed before starting my application:
 * Java Servlets: https://www.tutorialspoint.com/servlets/index.htm 
