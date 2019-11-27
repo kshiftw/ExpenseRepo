@@ -30,7 +30,9 @@ public class ItemsController extends HttpServlet {
 		List<Items> list = null;		
 				
 		// false - don't create new session if it doesn't exist
-		HttpSession session = request.getSession(false);		
+		HttpSession session = request.getSession(false);	
+		
+		// store the username string to use to list expense items tied to the user
 		String username = ((Login) session.getAttribute("loginUser")).getUsername();
 						
 		try {
@@ -38,14 +40,13 @@ public class ItemsController extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-				
+		
+		// set the list as a request attribute so that it can be used to display expense items on the main page
 		request.setAttribute("itemsList", list);
 		
+		// forward to the itemsPage.jsp page 
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/items/itemsPage.jsp");
-		dispatcher.forward(request, response);	
-		
-		//String redirect = response.encodeRedirectURL(request.getContextPath() + "/items/itemsPage.jsp");
-		//response.sendRedirect(redirect);				
+		dispatcher.forward(request, response);						
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -63,15 +64,22 @@ public class ItemsController extends HttpServlet {
 			
 			ResultSet rs = stmt.executeQuery();
 			
+			// if the query was successful (ie. the resultset has a next value available to read)
 			while (rs.next()) {
 				//int itemID = rs.getInt("itemsID");
+				
+				// store into the associated variables
 				int itemID = rs.getInt("itemsid");
 				LocalDate date = rs.getObject("date", LocalDate.class);
 				double amount = rs.getDouble("amount");
 				String description = rs.getString("description");
 				String category = rs.getString("category");
 				String type = rs.getString("type");
+				
+				// create a new Items object with the variables received from the SQL statement
 				Items item = new Items(itemID, date, amount, description, category, type);
+				
+				// add the Items object to the list
 				list.add(item);							
 			}
 		} catch (SQLException e) {

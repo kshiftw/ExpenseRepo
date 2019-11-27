@@ -36,34 +36,32 @@ public class CreateItem extends HttpServlet {
 		String category;
 		String itemType;
 		
-		// false - don't create new session if it doesn't exist
+		// getSession(false) because we don't create new session if it doesn't already exist
 		HttpSession session = request.getSession(false);
 		String username = ((Login) session.getAttribute("loginUser")).getUsername();
 		
-		// get variables passed from user input
+		// store user input for each column into variables
 		date = LocalDate.parse(request.getParameter("Date"));
 		amount = Double.parseDouble(request.getParameter("Amount"));
 		description = request.getParameter("Description");
 		category = request.getParameter("Category");
 		itemType = request.getParameter("Type");
 		
-		// System.out.println("Got Variables: "+ date + amount + description + category + itemType);	
-		
 		try {
 			createItem(date, amount, description, category, itemType, username);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		response.sendRedirect(request.getContextPath() + "/Main"); 
-		
+		// redirect back to ItemsController after creation 
+		response.sendRedirect(request.getContextPath() + "/Main"); 		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 	
+	// function createItem used to send Insert query to database
 	private void createItem (LocalDate date, double amount, String description, String category, String itemType, String username) throws SQLException{
-		
 		try (Connection conn = ConnectJDBC.getConnection(); PreparedStatement stmt = conn.prepareStatement(queryCreateItem)){
 			stmt.setObject(1, date);
 			stmt.setDouble(2, amount);

@@ -23,14 +23,15 @@ public class DeleteItem extends HttpServlet {
 	private String queryDeleteItem = "DELETE FROM items WHERE itemsid = ?; ";
  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// convert from string to integer
 		int id = Integer.parseInt(request.getParameter("ID"));
 	
 		try {
 			deleteItem(id);		
-			System.out.println("Done Delete: " + id);	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
+		// redirect back to ItemsController after deletion
 		response.sendRedirect(request.getContextPath() + "/Main");		
 	}
 

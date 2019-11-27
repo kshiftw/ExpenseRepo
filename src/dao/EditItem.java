@@ -33,11 +33,11 @@ public class EditItem extends HttpServlet {
 		String category;
 		String itemType;
 		
-		// false - don't create new session if it doesn't exist
+		// getSession(false) because we don't create new session if it doesn't already exist
 		HttpSession session = request.getSession(false);
 		String username = ((Login) session.getAttribute("loginUser")).getUsername();
 		
-		// get variables passed from user input
+		// store user input for each column into variables
 		itemID = Integer.parseInt(request.getParameter("ID"));
 		date = LocalDate.parse(request.getParameter("Date"));
 		amount = Double.parseDouble(request.getParameter("Amount"));
@@ -45,16 +45,13 @@ public class EditItem extends HttpServlet {
 		category = request.getParameter("Category");
 		itemType = request.getParameter("Type");
 		
-		// System.out.println("Got Variables: "+ itemID + date + amount + description + category + itemType);
-		
 		try {
 			editItem(itemID, date, amount, description, category, itemType, username);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		response.sendRedirect(request.getContextPath() + "/Main"); 
-		
+		// redirect back to ItemsController after editing items
+		response.sendRedirect(request.getContextPath() + "/Main"); 		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -75,5 +72,4 @@ public class EditItem extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
 }

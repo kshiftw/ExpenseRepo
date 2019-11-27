@@ -27,16 +27,21 @@ public class LoginController extends HttpServlet {
 	}	       
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.sendRedirect("login/login.jsp");
+		// Upon GET request, forward it to the login.jsp file to read user input for login verification
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/login/login.jsp");
 		dispatcher.forward(request, response);	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
-		// if POST command received, authenticate the username / password
+		// if POST request is received, authenticate the username / password
 		authenticate(request, response);
 	}
-
+	
+	/* 
+	 * Purpose: authenticate/validate the user credentials provided by the user upon POST request (ie. user clicks "login" button)
+	 * If the username/password combination exists in the database, redirect the browser to the main expenses page
+	 * If the credentials do not exist, display an error notification and ask the user to try again	
+	*/
 	private void authenticate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// get the username / password strings provided by user		
 		String username = request.getParameter("username");
@@ -49,19 +54,21 @@ public class LoginController extends HttpServlet {
 		
 		try {
 			// if username / password combo exists in database...
-			if (loginDao.validate(login)) {
-				// move user to items page
+			if (loginDao.validate(login)) {				
 				System.out.println("Connection Success");
 				HttpSession session = request.getSession();
 				session.setAttribute("NOTIFICATION", "");
-				session.setAttribute("loginUser", login);
 				
-				//response.sendRedirect("/BudgetTracker/Main");
+				// store the user login to use as reference for which items to display later
+				session.setAttribute("loginUser", login);				
+				
+				// redirect the browser to the main expenses page
 				response.sendRedirect("/MyExpenses/Main");
 			} else {
 				// Display login unsuccessful notification
 				request.getSession().setAttribute("NOTIFICATION", "Login Unsuccessful. Please try again. To try out the application, use the username: \"root\" & password: \"root\"");
-				//response.sendRedirect("login/login.jsp");
+				
+				// forward back to login.jsp and wait for the next request
 				RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/login/login.jsp");
 				dispatcher.forward(request, response);	
 			}

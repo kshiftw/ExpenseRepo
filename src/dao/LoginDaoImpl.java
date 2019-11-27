@@ -6,13 +6,13 @@ import java.sql.*;
 
 public class LoginDaoImpl implements LoginDao {
 	
+	// SELECT statement used to query the database for user/pass verification
 	private static final String queryUserPass = "SELECT * FROM users WHERE username = ? and password = ? ;";
 	
 	@Override
 	public boolean validate(Login login) throws ClassNotFoundException {
 		boolean status = false;
-		
-		//Class.forName("com.mysql.cj.jdbc.Driver");
+				
 		Class.forName("org.postgresql.Driver");
 		
 		// use try-with-resources statement
@@ -34,18 +34,8 @@ public class LoginDaoImpl implements LoginDao {
 			e.printStackTrace();
 		}
 		
+		// return true if the username/password combination exists in the database and false if it doesn't exist
 		return status;
-	}
-	
-	public Connection getLoginConnection() throws ClassNotFoundException {
-		//Class.forName("com.mysql.cj.jdbc.Driver");
-		Class.forName("org.postgresql.Driver");
-		try (Connection conn = ConnectJDBC.getConnection()){
-			return conn;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+	}	
 }
 

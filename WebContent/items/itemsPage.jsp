@@ -175,32 +175,36 @@
 		font-size: 45px;
 		font-family: 'Bubblegum Sans', Helvetica, sans-serif;
 	}
-	
-	
 </style>
+
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.20/api/sum().js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
 
 <script type="text/javascript">
-$(document).ready(function(){
-	//var yearMonth = "2019-12";
-		
+$(document).ready(function(){		
 	// Add DataTable plugin to include pagination, search, sorting, etc. on the table
 	$('#myTable').DataTable({
+		// set default ordering on second column: date (column numbering starts from 0)
 		"order": [[ 1, 'desc']],
+		
+		// setup the table controls https://datatables.net/reference/option/dom
 		'sDom': 'lrtip',
+		
 		columnDefs: [
-			{// display amount column with thousands separator ',' + decimal separator '.' + decimal places: 2 + prefix '$'
+			{
+				// display column, amount, with thousands separator ',' + decimal separator '.' + decimal places: 2 + prefix '$'
 				targets: [2],
 			    render: $.fn.dataTable.render.number(',', '.', 2, '$')
 		    },
 			{
-				targets: [1,2,3,4,5,6],
+				// center the text for the table columns
+		    	targets: [1,2,3,4,5,6],
 				className: 'dt-center'
 			} 		
 		],	   
 	});	
+	
 	var myTableVar = $('#myTable').DataTable();
 	var sumExpense;
 	var sumTotal;
@@ -215,7 +219,7 @@ $(document).ready(function(){
 	var sumUtil;
 	var sumOthers;
 	
-	// Plugin to insert text in the middle of the chart
+	// Plugin to insert text in the middle of the donut chart
 	Chart.pluginService.register({
 		  beforeDraw: function (chart) {
 		    if (chart.config.options.elements.center) {
@@ -258,6 +262,7 @@ $(document).ready(function(){
 		  }
 		}); 
 	
+	// setup donut chart 
 	var ctx = document.getElementById("myChart").getContext('2d');
 	var myChart = new Chart(ctx, {
 	  type: 'doughnut',
@@ -342,30 +347,49 @@ $(document).ready(function(){
 	
 	// Add datepicker plugin
 	$('#datepicker').datepicker({
-	    format: "MM yyyy",
+	    // setup for displaying in months instead of days
+		format: "MM yyyy",
 	    startView: "months", 
 	    minViewMode: "months",
 	    todayHighlight: true,
 	    autoclose: true,
-	}); 
-	
+	}); 	
+
+	// checking the reloaded variable/flag to see if the page was reloaded due to an add/edit/delete
 	var reloaded = localStorage.getItem("reloaded");
+	// if it was reloaded due to an add/edit/delete, then restore the chart and table view to what was previously displayed
 	if (reloaded) {
-		localStorage.removeItem("reloaded");		
+		localStorage.removeItem("reloaded");				
+		
+		// create date variable using the saved Year and Month variables
 		var date = new Date(localStorage.getItem('YearSave'), localStorage.getItem('MonthSave')-1, 1);				
 		$('#datepicker').datepicker('update', date);	
 		
+		// clear previous table searches so it doesn't conflict
 		myTableVar.column(1).search('').column(4).search('').column(5).search('');
+		
+		// setup the table search to the saved variable
 		myTableVar.column(1).search(localStorage.getItem('yearMonthSave')).draw();
-		drawChart();
+		
+		// redraw the table and chart
+		drawTableChart();
 	} else {
+		// set the datepicker date to the current date(month)
 		$('#datepicker').datepicker("setDate", new Date());
-		drawChart();
+		
+		// redraw the table and chart
+		drawTableChart();
 	}; 
 	
-	function drawChart() {
+	// function used to draw the table and chart
+	// this function is called every time the page loads
+	function drawTableChart() {
+		// set the month variable. Need to add 1 because the datepicker plugin starts counting from 0 whereas we want months to count from 1
 		var selectedMonth = $('#datepicker').datepicker("getDate").getMonth() + 1;
 		var selectedYear = $('#datepicker').datepicker("getDate").getFullYear();
+		
+		// appending a 0 in front of months less than 10 to match the table date format so that we can search the table properly
+		// ex. June (month 6) becomes 06 for a 2019-06 search instead of 2019-6
 		if (selectedMonth < 10){
 			selectedMonth = "0" + selectedMonth;
 		}
@@ -380,7 +404,7 @@ $(document).ready(function(){
 		// draw table with given yearMonth
 		myTableVar.column(1).search(yearMonth).draw();		
 		
-		// calculate total amounts
+		// calculate total amounts from the table data
 		sumTotal = myTableVar.column(2, {search: 'applied'}).data().sum();		
 		sumExpense = myTableVar.column(1).search(yearMonth).column(5).search('Expense').column(2, {search: 'applied'}).data().sum();
 		sumIncome = myTableVar.column(1).search(yearMonth).column(5).search('Income').column(2, {search: 'applied'}).data().sum();
@@ -407,9 +431,12 @@ $(document).ready(function(){
 		myChart.data.datasets[0].data[6] = sumUtil;
 		myChart.data.datasets[0].data[7] = sumOthers;
 		myChart.update();
+		
+		// clear table search so it doesn't interfere with future table filtering
 		myTableVar.column(1).search('').column(4).search('').column(5).search('');
 		myTableVar.column(1).search(yearMonth)
 		
+		// change the income/expense summaries with the calculated totals
 		document.getElementById("totalIncome").innerHTML = "Income: <b>$" + Number(sumIncome).toFixed(2) + "</b>";
 		document.getElementById("totalExpense").innerHTML = "Expense: <b>$" + Number(sumExpense).toFixed(2) + "</b>";
 		if(sumBalance < 0){
@@ -419,6 +446,8 @@ $(document).ready(function(){
 		}		
 	};
 	
+	// similar to the drawTableChart() function but this function is used for displaying all expense items instead of a specific month/year
+	// this function is called when the "Show All" button is clicked
 	function drawChartShowAll(){
 		var sumExpenseAll;
 		var sumBalanceAll;
@@ -461,16 +490,19 @@ $(document).ready(function(){
 		myChart.update();
 		myTableVar.column(1).search('').column(4).search('').column(5).search('');
 		
+		// change the income/expense summaries with the calculated totals
 		document.getElementById("totalIncome").innerHTML = "Income: <b>$" + Number(sumIncomeAll).toFixed(2) + "</b>";
 		document.getElementById("totalExpense").innerHTML = "Expense: <b>$" + Number(sumExpenseAll).toFixed(2) + "</b>";
 		if(sumBalanceAll < 0){
 			document.getElementById("Balance").innerHTML = "Balance: <b>-$" + Number(-sumBalanceAll).toFixed(2) + "</b>";
 		} else {
 			document.getElementById("Balance").innerHTML = "Balance: <b>$" + Number(sumBalanceAll).toFixed(2) + "</b>";
-		}		
-		
+		}				
 	};
 	
+	
+	// similar to the drawTableChart() function but this function is used for displaying expense items for the selected year
+	// this function is called when the "Show Year" button is clicked
 	function drawChartShowYear(selectedYear){
 		var sumExpenseYear;
 		var sumBalanceYear;
@@ -485,6 +517,7 @@ $(document).ready(function(){
 		var sumUtilYear;
 		var sumOthersYear;
 		
+		// calculate totals from table data
 		sumTotalYear = myTableVar.column(2, {search: 'applied'}).data().sum();		
 		sumExpenseYear = myTableVar.column(5).search('Expense').column(2, {search: 'applied'}).data().sum();
 		sumIncomeYear = myTableVar.column(5).search('Income').column(2, {search: 'applied'}).data().sum();
@@ -514,6 +547,7 @@ $(document).ready(function(){
 		
 		document.getElementById("datepicker").value = selectedYear;
 		
+		// change the income/expense summaries with the calculated totals
 		document.getElementById("totalIncome").innerHTML = "Income: <b>$" + Number(sumIncomeYear).toFixed(2) + "</b>";
 		document.getElementById("totalExpense").innerHTML = "Expense: <b>$" + Number(sumExpenseYear).toFixed(2) + "</b>";
 		if(sumBalanceAll < 0){
@@ -523,16 +557,19 @@ $(document).ready(function(){
 		}		
 	}	
 	
+	// redraw the chart every time a new date is selected
 	$('#datepicker').datepicker().on('changeDate', function() {
 		drawChart();		
 	}); 
 	
+	// when the "Show All" button is clicked, call on the drawChartShowAll() function to display appropriate table and chart
 	$(".show-all").click(function(){
 		myTableVar.column(1).search('').column(4).search('').column(5).search('').draw();
 		$('#datepicker').datepicker('update', '');
 		drawChartShowAll();
 	});
 	
+	// when the "Show Year" button is clicked, call on the drawChartShowYear() function to display appropriate table and chart
 	$(".show-year").click(function(){
 		var selectedYear = $('#datepicker').datepicker("getDate").getFullYear();		
 		if (selectedYear != ''){
@@ -543,10 +580,12 @@ $(document).ready(function(){
 		}		
 	});
 		
-	// Create a variable called newAdd to identify the difference between deletes on entries 
-	// that don't exist in DB (ie. clicking the Add New button) vs entries that 
-	// do exist in DB. The latter needing SQL statements to delete from DB whereas
-	// the former doesn't require any SQL statements, just a UI delete in the table. 
+	/* 
+	 Create a variable called newAdd to identify the difference between deletes on entries 
+	 that don't exist in DB (ie. clicking the Add New button) vs entries that 
+	 do exist in DB. The latter needing SQL statements to delete from DB whereas
+	 the former doesn't require any SQL statements, just a UI delete in the table. 
+	*/
 	var newAdd = false;
 	
 	// script to ensure client side only enters valid amount ie. a number with max 2 decimal places
@@ -562,16 +601,17 @@ $(document).ready(function(){
 	$('[data-toggle="tooltip"]').tooltip();	
 	
 	// get the add/edit/delete buttons in HTML
-	var actions = $("table td:last-child").html();
+	// var actions = $("table td:last-child").html();
 	var actions = '<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>' +
 	'<a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>' +
 	'<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>';
     
     // when "Add New" button is clicked...
-    $(".add-new").click(function(){
-		//$(this).attr("disabled", "disabled");     
-		newAdd = true;        
-        // create text fields for user to enter new column info
+    $(".add-new").click(function(){    
+		// set the newAdd flag to be true because this is going to a newly added item (ie. it has no existing itemID)
+    	newAdd = true;        
+        
+		// create text fields for user to enter new column info
         var row = '<tr>' +
             '<td><input type="date" class="form-control" name="date" id="date"></td>' +
             '<td><input type="number" class="form-control" name="amount" id="amount"></td>' +
@@ -593,7 +633,6 @@ $(document).ready(function(){
     	// add new row to top of table
     	$("table").prepend(row);		
     	
-    	//amount_validate();
     	// toggle to show add button and hide edit button
 		$("table tbody tr").eq(0).find(".add, .edit").toggle(); 
         $('[data-toggle="tooltip"]').tooltip();
@@ -612,6 +651,7 @@ $(document).ready(function(){
 			if(!$(this).val()){
 				// refer to css above - adds red border color
 				$(this).addClass("error");
+				// set empty flag to true
 				empty = true;
 			} else{
                 // remove red border color
@@ -624,6 +664,7 @@ $(document).ready(function(){
 		
 		var checkID = $(this).parents("tr").find("#itemID").text();
 		
+		// if all fields are filled in, save the inputted values
 		if (!empty){			
 			var date = $(this).parents("tr").find("#date").val();
 			var amount = $(this).parents("tr").find("#amount").val();
@@ -638,15 +679,16 @@ $(document).ready(function(){
 			input.each(function(){
 				// the table data is saved to the user input
 				$(this).parent("td").html($(this).val());							
-			});						
+			});
+			
+			// save the user inputted text into variables to send in a POST request
 			var editDate = $(this).parents("tr").find('#date').text();
 			var editAmount = $(this).parents("tr").find('#amount').text();
 			var editDescription = $(this).parents("tr").find('#description').text();
 			var editCategory = $(this).parents("tr").find('#category').text();
 			var editType = $(this).parents("tr").find('#type').text();
 			
-			// alert(editDate + editAmount + editDescription + editCategory + editType);
-			
+			// create POST request to the EditItem servlet in order to edit the appropriate expense item
 			$.ajax({
 	      		type: "POST",
 	      		url: "/MyExpenses/EditItem",
@@ -665,10 +707,7 @@ $(document).ready(function(){
 	      	});    
 			
 			// toggle to hide add button and show edit button for the first row
-			$(this).parents("tr").find(".add, .edit").toggle();
-			
-			// remove disabled flag
-			$(".add-new").removeAttr("disabled");
+			$(this).parents("tr").find(".add, .edit").toggle();			
 		} 
 		
 		// New Add not EDIT
@@ -677,10 +716,9 @@ $(document).ready(function(){
 			input.each(function(){
 				// the table data is saved to the user input
 				$(this).parent("td").html($(this).val());
-			});	
-									
-			// alert(date + amount + description + category + itemType);
+			});									
 			
+			// create POST request to the CreateItem servlet in order to create a new expense item
 			$.ajax({
 	      		type: "POST",
 	      		url: "/MyExpenses/CreateItem",
@@ -700,29 +738,35 @@ $(document).ready(function(){
 			// toggle to hide add button and show edit button for the first row
 			$(this).parents("tr").find(".add, .edit").toggle();
 						
-			// remove disabled flag
-			$(".add-new").removeAttr("disabled");				
+						
 		}
+		
+		// save the reloaded flag so that we can display the same table/chart view as before after reloading
 		localStorage.setItem("reloaded", "true");
+		
+		// reload the page
 		location.reload(true);
     });
 
-	// Edit row on edit button click
-	$(document).on("click", ".edit", function(){	       
+	// when the edit button on a row is clicked...
+	$(document).on("click", ".edit", function(){	       		
+		// save the user inputted values so that they can be used to fill in the text boxes. Without this, the text boxes will be blank
 		var saveCat = $(this).parents("tr").find("#category").text();	
 		var saveType = $(this).parents("tr").find("#type").text();
 		var saveAmt = $(this).parents("tr").find("#amount").text().substr(1);
-		//alert($(this).parents("tr").find("#amount").text() + " " + $(this).parents("tr").find("#amount").html());
 		
+		// create the appropriate text boxes for each column in the row
 		$(this).parents("tr").find("#date").html('<input type="date" class="form-control" name="date" id="date" value = "' + $(this).parents("tr").find("#date").text() + '">');
         $(this).parents("tr").find("#amount").html('<input type="number" class="form-control" name="amount" id="amount">');
         $(this).parents("tr").find("#description").html('<input type="text" class="form-control" name="description" id="description" value = "' + $(this).parents("tr").find("#description").text() + '">');
         $(this).parents("tr").find("#category").html('<select class="form-control" name="category" id="category"> <option value="Everyday/Living">Everyday/Living</option><option value="Transportation">Transportation</option><option value="Dining Out">Dining Out</option><option value="Groceries">Groceries</option><option value="Personal/Medical">Personal/Medical</option><option value="Gifts">Gifts</option><option value="Utilities">Utilities</option><option value="Others">Others</option> <option value="Income">Income</option>');
         $(this).parents("tr").find("#type").html('<select class="form-control" name="type" id="type"> <option value="Expense">Expense</option><option value="Income">Income</option>');
 		   
-     // use saved values so that the dropdowns have the previous values instead of default (first option)
+        // use saved values so that the dropdowns have the previous values instead of default (first option)
 		$(this).parents("tr").find("#category").val(saveCat);
 		$(this).parents("tr").find("#type").val(saveType);
+		
+		// set the amount column back to the saved value
 		$(this).parents("tr").find("#amount").val(saveAmt);
 		
 		// toggle to show add button and hide edit button
@@ -735,11 +779,12 @@ $(document).ready(function(){
 	
 	// Delete row on delete button click
 	$(document).on("click", ".delete", function(){
-        if (!newAdd){        	
-        	// do SQL statements to delete existing entry
-        	// remove the table row on click		
+        // if the expense entry is not a new entry (ie. it already exists in the database)
+		if (!newAdd){        	
+        	// store the itemID to use in the POST request
            	var id = $(this).parents("tr").find("#itemID").text();
             
+        	// create POST request to the DeleteItem servlet in order to delete the entry with the associated itemID
           	$.ajax({
           		type: "POST",
           		url: "/MyExpenses/DeleteItem",
@@ -752,10 +797,15 @@ $(document).ready(function(){
                 }
           	});       	
         }         
+        
+        // remove the row from the table
         $(this).parents("tr").remove();
-		$(".add-new").removeAttr("disabled");
-		localStorage.setItem("reloaded", "true");
-		location.reload(true);
+		
+        // save reloaded flag
+        localStorage.setItem("reloaded", "true");
+		
+        // reload the page
+        location.reload(true);
     });
 });
 </script>

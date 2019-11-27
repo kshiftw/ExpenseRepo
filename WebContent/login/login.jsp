@@ -26,8 +26,7 @@
 	#MyBudget {
 		font-size: 45px;
 		font-family: 'Bubblegum Sans', Helvetica, sans-serif;
-	}
-	
+	}	
 </style>	
 	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -41,23 +40,19 @@ $(document).ready(function(){
 
 </head>
 <body>
-
-	<%-- <jsp:include page ="../common/header.jsp"></jsp:include>  --%> 
-	
 	<div class="jumbotron text-center" id="heading">
 		<h1 id="MyBudget">MyExpenses</h1>
 		<h5>Stay on top of your money by tracking your monthly and annual expenses.</h5>
 	</div>	
 	
 	<div class ="container">
-		<form action="<%=request.getContextPath()%>/Login" method="post">
-			
+		<%-- POST request to LoginController for username/password validation --%>
+		<form action="<%=request.getContextPath()%>/Login" method="post">			
 			<div class="row">
 				<div class="col-4 offset-md-4">
 					<p>${NOTIFICATION}</p>
 				</div>			
-			</div>
-			
+			</div>			
 			<div class="row">
 				<div class="col">
 				</div>
@@ -68,8 +63,7 @@ $(document).ready(function(){
 				</div>
 				<div class="col">
 				</div>
-			</div>
-			
+			</div>			
 			<div class="row">
 				<div class="col">
 				</div>
@@ -89,6 +83,5 @@ $(document).ready(function(){
 			</div>
 		</form>	
 	</div>
-	<%-- <jsp:include page="../common/footer.jsp"></jsp:include> --%> 
 </body>
 </html>
