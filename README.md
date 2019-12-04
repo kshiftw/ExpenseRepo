@@ -102,5 +102,6 @@ ___
 ### Delete
 ![Delete](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/common/delete.gif)
 
-
+## Flow Diagram - Interaction of functions
+![Diagram](https://github.com/kshiftw/ExpenseRepo/blob/master/WebContent/common/MyExpenses%20Flow%20Diagram.jpg)
 
